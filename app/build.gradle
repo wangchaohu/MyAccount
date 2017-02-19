@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -30,8 +31,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.alibaba:fastjson:1.1.56.android'
     compile 'com.android.support:cardview-v7:24.0.0'
-    compile files('libs/android-support-v4.jar')
     compile files('libs/AutoUpdate_SDK.jar')
-
     compile 'com.yanzhenjie:permission:1.0.5'
 }

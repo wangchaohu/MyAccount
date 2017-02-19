@@ -36,7 +36,7 @@
         </meta-data>
 
         <activity android:name=".MainActivity"
-            android:launchMode="singleTop">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,9 +49,7 @@
 
         <!-- 下载基础服务 -->
         <service
-            android:name="com.iflytek.autoupdate.IFlytekDownloadService"
-            android:enabled="true"
-            android:process=":IFlytekDownloadService" />
+            android:name="com.iflytek.autoupdate.IFlytekDownloadService" />
     </application>
 
 
