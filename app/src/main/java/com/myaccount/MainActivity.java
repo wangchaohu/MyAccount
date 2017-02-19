@@ -10,6 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import com.iflytek.autoupdate.IFlytekUpdate;
+import com.iflytek.autoupdate.IFlytekUpdateListener;
+import com.iflytek.autoupdate.UpdateConstants;
+import com.iflytek.autoupdate.UpdateErrorCode;
+import com.iflytek.autoupdate.UpdateInfo;
+import com.iflytek.autoupdate.UpdateType;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private String data;
 
     private WriteUtils writeRead;
+
+    private IFlytekUpdate updManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 mHandler.sendEmptyMessage(0x125);
             }
         });
+
         writeRead.readData();
     }
 
@@ -95,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRvAdapter() {
+        Log.d("wch", "setRvAdapter: " + data);
         adapter = new RecycleViewAdapter(MainActivity.this, data);
         today = adapter.getDate();
         llm = new LinearLayoutManager(MainActivity.this);
@@ -113,5 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 writeRead.readData();
             }
         }
+
     }
+
 }

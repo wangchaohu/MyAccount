@@ -56,9 +56,6 @@ public class SpeechActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
 
-        //初始化即创建语音配置对象，只有初始化后才可以使用MSC的各项服务。建议将初始化放在程序入口处（如Application、Activity的onCreate方法),
-        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=58a43717");
-
         createDialog();
         initIat();
         init();
