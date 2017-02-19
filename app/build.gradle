@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'MyAccount'
+            keyPassword 'zx1115hx'
+            storeFile file('/Users/wangchaohu/Documents/code/workspace1/MyAccount/accountKey.jks')
+            storePassword 'zx1115hx'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
     defaultConfig {
@@ -12,18 +20,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-
-    signingConfigs {   //签名文件
-        release {
-            storeFile file("/Users/wangchaohu/Documents/code/workspace1/MyAccount/accountKey")
-        }
-    }
-
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 }

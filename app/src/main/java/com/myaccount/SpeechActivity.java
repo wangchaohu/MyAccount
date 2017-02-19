@@ -1,7 +1,9 @@
 package com.myaccount;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,7 +18,6 @@ import com.iflytek.cloud.RecognizerResult;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
-import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 
@@ -184,7 +185,7 @@ public class SpeechActivity extends AppCompatActivity {
 
         resultTv.setText(lastStr + resultBuffer.toString());
         resultTv.setSelection(resultTv.length());
-        toJsonString();
+
     }
 
     private void toJsonString(){
@@ -209,12 +210,30 @@ public class SpeechActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("json", json);
-        intent.putExtra("isSameDay", isSameDay);
-        setResult(0x123, intent);
-        json = "";
-        super.onBackPressed();
+
+        Log.d("wch", "onBackPressed: ");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(SpeechActivity.this);
+        dialog.setTitle("重要信息")
+                .setMessage("退出后将不能修改、删除，是否退出？")
+                .setNegativeButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                toJsonString();
+                Intent intent = new Intent();
+                intent.putExtra("json", json);
+                intent.putExtra("isSameDay", isSameDay);
+                setResult(0x123, intent);
+                json = "";
+                finish();
+            }
+        }).setPositiveButton("修改", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.create().show();
     }
 
 }

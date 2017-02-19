@@ -1,12 +1,7 @@
 package com.myaccount;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.iflytek.autoupdate.IFlytekUpdate;
@@ -51,7 +46,7 @@ public class AccountApplication extends Application {
         //设置通知栏使用应用icon，详情请见示例
         updManager.setParameter(UpdateConstants.EXTRA_NOTI_ICON, "true");
         //设置更新提示类型，默认为通知栏提示
-        updManager.setParameter(UpdateConstants.EXTRA_STYLE, UpdateConstants.UPDATE_UI_NITIFICATION);
+        updManager.setParameter(UpdateConstants.EXTRA_STYLE, UpdateConstants.UPDATE_UI_DIALOG);
         updManager.autoUpdate(mContext, updateListener);
     }
 
@@ -61,14 +56,9 @@ public class AccountApplication extends Application {
 
             if(errorCode == UpdateErrorCode.OK && result!= null) {
                 if(result.getUpdateType() == UpdateType.NoNeed) {
-//                    Toast.makeText(mContext, "已经是最新版本！", Toast.LENGTH_SHORT).show();
-//                    return;
+                    return;
                 }
                 updManager.showUpdateInfo(mContext, result);
-            }
-            else
-            {
-                Toast.makeText(mContext, "请求更新失败！\n更新错误码：" + errorCode , Toast.LENGTH_SHORT).show();
             }
         }
     };

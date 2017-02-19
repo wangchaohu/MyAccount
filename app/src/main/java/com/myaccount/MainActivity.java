@@ -2,7 +2,6 @@ package com.myaccount;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -10,19 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.iflytek.autoupdate.IFlytekUpdate;
-import com.iflytek.autoupdate.IFlytekUpdateListener;
-import com.iflytek.autoupdate.UpdateConstants;
-import com.iflytek.autoupdate.UpdateErrorCode;
-import com.iflytek.autoupdate.UpdateInfo;
-import com.iflytek.autoupdate.UpdateType;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
 
 
 /**
@@ -106,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRvAdapter() {
-        Log.d("wch", "setRvAdapter: " + data);
         adapter = new RecycleViewAdapter(MainActivity.this, data);
         today = adapter.getDate();
         llm = new LinearLayoutManager(MainActivity.this);
