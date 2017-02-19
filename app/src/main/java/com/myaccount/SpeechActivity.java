@@ -1,8 +1,14 @@
 package com.myaccount;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -20,6 +27,9 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +81,7 @@ public class SpeechActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mIat.startListening(mRecoListener);
+                    setPermission();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     mIat.stopListening();
                 }
@@ -234,6 +244,40 @@ public class SpeechActivity extends AppCompatActivity {
         });
 
         dialog.create().show();
+    }
+
+    private void setPermission() {
+        /**23以上定位权限申请*/
+        if (Build.VERSION.SDK_INT >= 23) {
+            int i = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+            // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
+            if (i == PackageManager.PERMISSION_GRANTED) {  //授权
+                mIat.startListening(mRecoListener);
+            } else if (i == PackageManager.PERMISSION_DENIED) {
+                //拒绝
+                ActivityCompat.requestPermissions(SpeechActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, 101);
+            }
+        } else {
+            mIat.startListening(mRecoListener);
+        }
+    }
+
+    /**
+     * 定位权限返回处理
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 101) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mIat.startListening(mRecoListener);
+            } else {
+                Toast.makeText(SpeechActivity.this, "没有获得权限，将无法正常使用", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
