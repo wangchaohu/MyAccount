@@ -15,7 +15,7 @@ android {
         applicationId "com.myaccount"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 2
+        versionCode 1
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

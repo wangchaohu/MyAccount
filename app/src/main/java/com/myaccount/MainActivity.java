@@ -1,7 +1,6 @@
 package com.myaccount;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -17,14 +16,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.iflytek.autoupdate.IFlytekUpdate;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.PermissionListener;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
-
-import java.util.List;
 
 
 /**
@@ -59,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setPermission();
         super.onResume();
     }
-
 
 
     private void initView() {
@@ -149,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void setPermission() {
         /**23以上定位权限申请*/
         if (Build.VERSION.SDK_INT >= 23) {
@@ -159,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 writeRead.readData();
             } else if (i == PackageManager.PERMISSION_DENIED) {
                 //拒绝
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO}, 100);
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO}, 100);
             }
         } else {
             writeRead.readData();
