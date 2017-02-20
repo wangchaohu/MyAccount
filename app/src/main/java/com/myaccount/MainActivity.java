@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 writeRead.readData();
             } else if (i == PackageManager.PERMISSION_DENIED) {
                 //拒绝
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO}, 100);
             }
         } else {
             writeRead.readData();

@@ -27,9 +27,6 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -240,7 +237,26 @@ public class SpeechActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        super.onBackPressed();
+        if (!resultTv.getText().toString().equals("")) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(SpeechActivity.this);
+            dialog.setTitle("提示")
+                    .setMessage("内容没有保存，是否继续退出")
+                    .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setNeutralButton("去保存", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            dialog.create().show();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     private void setPermission() {
