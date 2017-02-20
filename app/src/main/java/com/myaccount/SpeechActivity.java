@@ -49,7 +49,7 @@ public class SpeechActivity extends AppCompatActivity {
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
 
     private EditText resultTv;
-    private TextView btn;
+    private TextView btn, save;
 
     private String today;
     private boolean isSameDay = false;
@@ -63,8 +63,8 @@ public class SpeechActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_speech);
 
         createDialog();
@@ -76,6 +76,7 @@ public class SpeechActivity extends AppCompatActivity {
     private void init() {
         resultTv = (EditText) findViewById(R.id.tv);
         btn = (TextView) findViewById(R.id.start);
+        save = (TextView) findViewById(R.id.save_tv);
         btn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -89,6 +90,24 @@ public class SpeechActivity extends AppCompatActivity {
             }
         });
 
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toJsonString();
+                Intent intent = new Intent();
+                intent.putExtra("json", json);
+                intent.putExtra("isSameDay", isSameDay);
+                setResult(0x123, intent);
+                finish();
+            }
+        });
+
+        findViewById(R.id.btn_return).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         Intent intent = getIntent();
         today = intent.getStringExtra("today");
@@ -221,29 +240,7 @@ public class SpeechActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Log.d("wch", "onBackPressed: ");
-        AlertDialog.Builder dialog = new AlertDialog.Builder(SpeechActivity.this);
-        dialog.setTitle("重要信息")
-                .setMessage("退出后将不能修改、删除，是否退出？")
-                .setNegativeButton("退出", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                toJsonString();
-                Intent intent = new Intent();
-                intent.putExtra("json", json);
-                intent.putExtra("isSameDay", isSameDay);
-                setResult(0x123, intent);
-                json = "";
-                finish();
-            }
-        }).setPositiveButton("修改", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.create().show();
+        super.onBackPressed();
     }
 
     private void setPermission() {

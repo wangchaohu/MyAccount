@@ -16,4 +16,8 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="SpeechTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>

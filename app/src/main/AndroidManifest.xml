@@ -43,7 +43,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpeechActivity"/>
+        <activity android:name=".SpeechActivity"
+            android:theme="@style/SpeechTheme"/>
 
         <activity android:name ="com.iflytek.autoupdate.IFlytekUpdateDialog"/>
 
